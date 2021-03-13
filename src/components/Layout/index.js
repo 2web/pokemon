@@ -3,7 +3,7 @@ import s from './style.module.css';
 const Layout = ({title, desc, urlBg, colorBg}) => {
   const sectionStyle = {
     backgroundColor : colorBg,
-    backgroundImage : "url("+urlBg+")"
+    backgroundImage : `url(${urlBg})`
   }
   return (
     <>
