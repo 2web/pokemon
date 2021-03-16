@@ -1,7 +1,7 @@
 const GamePage = ({ onChangePage }) =>{
     const handleClickButton = () => {
         console.log('####: <HomePage />');
-        onChangePage && onChangePage('home');
+        onChangePage && onChangePage('app');
     };
     return (
         <>
