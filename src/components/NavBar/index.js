@@ -12,7 +12,7 @@ const NavBar = ({isActive, onChangeMenuActive}) => {
                 <p className={s.brand}>
                     LOGO
                 </p>
-                <a className={cn(s.menuButton, {[s.active]: isActive})} onClick={handleClickButton} >
+                <a className={cn(s.menuButton, {[s.active]: isActive}, {[s.deactive]: !isActive})} onClick={handleClickButton} href="/#">
                     <span />
                 </a>
             </div>
