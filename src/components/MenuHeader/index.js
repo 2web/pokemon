@@ -4,7 +4,7 @@ import NavBar from '../NavBar';
 
 const MenuHeader = () => {
   const [menuActive, setMenuActive] = useState(false);
-  const handleChangeActive = (menuActive) => {
+  const handleChangeActive = () => {
     setMenuActive(!menuActive);
   }
   return (

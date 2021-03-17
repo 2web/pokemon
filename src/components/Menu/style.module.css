@@ -177,8 +177,11 @@
 
   .menuContainer > .overlay,
   .menuContainer.active > .overlay {
-    height: 100vh;
-    width: 100vw;
+    position: absolute;
+    right: 0;
+    height: calc( 100vh - 120px );
+    width: calc( 100vw - 120px );
+    background: rgba(0, 0, 0, .5);
   }
   
   .menuContainer.active > .overlay {
