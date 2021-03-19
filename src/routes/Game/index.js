@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import { useHistory } from 'react-router-dom';
 
 import PokemonCard from '../../components/PokemonCard';
+
+import s from './style.module.css';
 
 const POKEMONS = [
     {
@@ -139,7 +140,6 @@ const POKEMONS = [
   ];
 
 const GamePage = () =>{
-    const history = useHistory();
 
     const [pokemons, setPokemons] = useState(POKEMONS);
     const handleClickPokemon = (e) => {
@@ -150,20 +150,14 @@ const GamePage = () =>{
         setPokemons(result);
     };
 
-    const handleClickHome = () =>{
-        history.push('/home');
-    };
     return (
-        <>
+        <div className={s.root}>
             <div className="flex">
                 {
                 pokemons.map((item) => <PokemonCard key={item.id} name={item.name} img={item.img} id={item.id} type={item.type} values={item.values} isActive={item.active} handleClickPokemon={handleClickPokemon} />)
                 }
             </div>
-            <button onClick={handleClickHome}>
-                Go to home!
-            </button>
-        </>
+        </div>
     );
 };
 
