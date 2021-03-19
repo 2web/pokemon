@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
+import { useRouteMatch, Route, Switch, Redirect } from 'react-router-dom'
 
 import HomePage from './routes/Home';
 import GamePage from './routes/Game';
@@ -13,26 +13,28 @@ import Footer from './components/Footer';
 
 
 const App = () => {
-  const location = useLocation();
-  const isExact = location.pathname === "/" || location.pathname === "/home";
+  const matchRoot = useRouteMatch('/');
+  const matchHome = useRouteMatch('/home');
+  const match = matchRoot.isExact || matchHome ;
   return (
       <Switch>
+        <Route path="/404" component={NotFoundPage} />
         <Route>
           <>
-            <MenuHeader bgActive={!isExact} />
+            <MenuHeader bgActive={!match} />
             <div className={cn(s.wrap, {
-              [s.isHomePage] : isExact
+              [s.isHomePage] : match
             })}>
-              <Route path="/" exact component={HomePage} />
-              <Route path="/home" component={HomePage} />
-              <Route path="/game" component={GamePage} />
-              <Route path="/contact" component={ContactPage} />
-              <Route path="/about" component={AboutPage} />
-              <Route path="/404" component={NotFoundPage} />
-              <Route render={() => (
-                <Redirect to="/home"/>
-              )} />
-              
+              <Switch>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/home" component={HomePage} />
+                <Route path="/game" component={GamePage} />
+                <Route path="/contact" component={ContactPage} />
+                <Route path="/about" component={AboutPage} />
+                <Route render={() => (
+                  <Redirect to="/404"/>
+                )} />
+              </Switch>
             </div>
             <Footer />
           </>

@@ -42,7 +42,6 @@ const MENU = [
             }
           </ul>
         </div>
-  
       </div>
     )
   }

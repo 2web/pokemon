@@ -1,19 +1,22 @@
+import s from './style.module.css';
 import { useHistory } from 'react-router-dom';
 
-const ContactPage = ({ onChangePage }) =>{
+const AboutPage = () =>{
     const history = useHistory();
 
     const handleClick = () =>{
         history.push('/home');
     };
     return (
-        <>
-            <p>This is about page!!!</p>
-            <button onClick={handleClick}>
-                Go to home!
-            </button>
-        </>
+        <div className={s.root}>
+            <header>This is about page!!!</header>
+            <p>
+                <button onClick={handleClick}>
+                    Go home!
+                </button>
+            </p>
+        </div>
     );
 };
 
-export default ContactPage;
+export default AboutPage;
