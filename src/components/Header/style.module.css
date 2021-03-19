@@ -9,17 +9,15 @@
     z-index: 1;
 }
 
-.root:before {
-    content: '';
-    position: fixed;
-    background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Stars.svg?sanitize=true);
-    background-attachment: fixed;
+.constelacao {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    min-height: 100vh;
-    z-index: -1;
-    opacity: 0;
-    animation: stars-move-in 1000ms 300ms forwards;
+    height: 100%;
+    animation: rotate 600s infinite linear;
 }
+
 
 @keyframes stars-move-in {
     from {
