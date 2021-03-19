@@ -9,16 +9,6 @@
     z-index: 1;
 }
 
-.constelacao {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    animation: rotate 600s infinite linear;
-}
-
-
 @keyframes stars-move-in {
     from {
         background-position-y: -100px;
