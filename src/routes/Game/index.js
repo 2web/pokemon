@@ -140,25 +140,25 @@ const POKEMONS = [
   ];
 
 const GamePage = () =>{
+  const [pokemons, setPokemons] = useState(POKEMONS);
 
-    const [pokemons, setPokemons] = useState(POKEMONS);
-    const handleClickPokemon = (e) => {
-        const result = pokemons.map(item => {
-        if (item.id === e) 
-            item["active"] = true; 
-        return item});
-        setPokemons(result);
-    };
+  const handleClickPokemon = (id) => {
+    setPokemons(pokemons.map(item =>
+        item.id === id
+        ? {...item, active : true}
+        : item
+    ));
+  }
 
-    return (
-        <div className={s.root}>
-            <div className="flex">
-                {
+  return (
+      <div className={s.root}>
+          <div className="flex">
+              {
                 pokemons.map((item) => <PokemonCard key={item.id} name={item.name} img={item.img} id={item.id} type={item.type} values={item.values} isActive={item.active} handleClickPokemon={handleClickPokemon} />)
-                }
-            </div>
-        </div>
-    );
+              }
+          </div>
+      </div>
+  );
 };
 
 export default GamePage;

@@ -21,6 +21,7 @@
 .estrela.style2 { animation-duration: 1s; animation-name: estrela; }
 .estrela.style3 { animation-duration: 1.5s; animation-name: estrela; }
 .estrela.style4 { animation-duration: 2s; animation-name: estrelaDestacada; }
+.estrela.style5 { animation-duration: 0s; }
 
 .estrela.tam1 { width: 1px; height: 1px; }
 .estrela.tam2 { width: 2px; height: 2px; }
@@ -29,6 +30,7 @@
 .estrela.opacity1 { opacity:  1; }
 .estrela.opacity2 { opacity: .5; }
 .estrela.opacity3 { opacity: .1; }
+.estrela.opacity4 { opacity: .8; }
 
 @keyframes estrela {
     0% {

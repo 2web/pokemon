@@ -11,9 +11,9 @@ const Header = ({title, descr, onClickButton}) => {
   };
 
   //estrelas
-  var style = ["style1", "style2", "style3", "style4"];
+  var style = ["style1", "style2", "style3", "style4", "style5"];
   var tam = ["tam1", "tam1", "tam1", "tam2", "tam3"];
-  var opacity = ["opacity1", "opacity1", "opacity1", "opacity2", "opacity2", "opacity3"];
+  var opacity = ["opacity1", "opacity4", "opacity1", "opacity1", "opacity2", "opacity2", "opacity3", "opacity4"];
 
   function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -21,12 +21,12 @@ const Header = ({title, descr, onClickButton}) => {
   function createMarkup() { return {__html: estrela}; };
 
   var estrela = "";
-  var qtdeEstrelas = 350;
+  var qtdeEstrelas = 200;
   var widthWindow = window.innerWidth;
   var heightWindow = window.innerHeight;
 
   for (var i = 0; i < qtdeEstrelas; i++) {
-    estrela += "<span class='estrela " + style[getRandomArbitrary(0, 4)] + " " + opacity[getRandomArbitrary(0, 6)] + " "
+    estrela += "<span class='estrela " + style[getRandomArbitrary(0, 5)] + " " + opacity[getRandomArbitrary(0, 8)] + " "
     + tam[getRandomArbitrary(0, 5)] + "' style='animation-delay: ." +getRandomArbitrary(0, 9)+ "s; left: "
     + getRandomArbitrary(0, widthWindow) + "px; top: " + getRandomArbitrary(0, heightWindow) + "px;'></span>";
   }
