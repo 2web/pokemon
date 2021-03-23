@@ -7,10 +7,10 @@ import AboutPage from './routes/About';
 import NotFoundPage from './routes/NotFound';
 
 import cn from 'classnames';
-import s from './style.module.css';
 import MenuHeader from './components/MenuHeader';
 import Footer from './components/Footer';
 
+import s from './style.module.css';
 
 const App = () => {
   const matchRoot = useRouteMatch('/');
