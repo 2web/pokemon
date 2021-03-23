@@ -16,24 +16,17 @@ const GamePage = () =>{
     refreshData();
   }, []);
 
-  const handleClickPokemon = (id, keyId) => {
+  const handleClickPokemon = (keyId) => {
     setPokemons(prevState => {
       return Object.entries(prevState).reduce((acc, item) => {
           const pokemon = {...item[1]};
-          if (item[0] === keyId) {
-              pokemon.active = true;
-              database.ref('pokemons/' + keyId).update({
-                active: pokemon.active,
-              }, (error) => {
-                if ( !error ){
-                  console.log("update complete!")
-                }
-                else{
-                  console.log("update error!")
-                }
-              })
-          };
-
+          if (item[0] === keyId) {    
+            pokemon.active = true;
+            database.ref('pokemons/'+ keyId).set(pokemon)
+            .then(function() {
+              
+            });
+          }
           acc[item[0]] = pokemon;
           return acc;
       }, {});
@@ -43,7 +36,7 @@ const GamePage = () =>{
   const handleResetCardsClick = () => {
     let bcheck = null;
     // eslint-disable-next-line array-callback-return
-    Object.entries(pokemons).map(([key, {active}]) => {
+    Object.entries(pokemons).forEach(([key, {active}]) => {
       if(active === true){
         if(bcheck === null)
           bcheck = false;
@@ -66,12 +59,18 @@ const GamePage = () =>{
     }
   }
 
+  const random = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const handleAddCardClick = () => {
     var obj = pokemons;
     var keys = Object.keys(pokemons); //получаем ключи объекта в виде массива
-    console.log(keys[keys.length - 1]); //последний элемент
     const newKey = database.ref().child('pokemons').push().key;
-    database.ref('pokemons/' + newKey).set(obj[keys[keys.length - 1]]);
+    database.ref('pokemons/' + newKey).set(obj[keys[random(0,keys.length - 1)]])
+    .then(function() {
+              
+    });
     refreshData();
   }
 
