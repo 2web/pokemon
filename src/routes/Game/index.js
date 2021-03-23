@@ -17,46 +17,36 @@ const GamePage = () =>{
   }, []);
 
   const handleClickPokemon = (keyId) => {
-    setPokemons(prevState => {
-      return Object.entries(prevState).reduce((acc, item) => {
+    Object.entries(pokemons).forEach((item) => {
           const pokemon = {...item[1]};
           if (item[0] === keyId) {    
             pokemon.active = true;
-            database.ref('pokemons/'+ keyId).set(pokemon)
+            database.ref('pokemons/'+ keyId).update(pokemon)
             .then(function() {
-              
+              setPokemons(prevState => {
+                const result = { ...prevState, [keyId]:pokemon };
+                return result;
+              });
             });
           }
-          acc[item[0]] = pokemon;
-          return acc;
-      }, {});
     });
   }
 
   const handleResetCardsClick = () => {
-    let bcheck = null;
-    // eslint-disable-next-line array-callback-return
-    Object.entries(pokemons).forEach(([key, {active}]) => {
-      if(active === true){
-        if(bcheck === null)
-          bcheck = false;
-        database.ref('pokemons/' + key).update({
-          active: false,
-        }, (error) => {
-          if ( error ){
-            bcheck = true;
-            console.log("Error save reset data!");
-          }
-          else{
-            console.log("Reseted data saved!");
-          }
-        })
+    Object.entries(pokemons).forEach((item) => {
+      const keyId = item[0];
+      const pokemon = {...item[1]};
+      if(pokemon.active === true){
+        pokemon.active = false;
+        database.ref('pokemons/' + keyId).update(pokemon)
+        .then(function() {
+          setPokemons(prevState => {
+            const result = { ...prevState, [keyId]:pokemon };
+            return result;
+          });    
+        });
       }
-    }
-    )
-    if( !bcheck ){
-      refreshData();
-    }
+    });
   }
 
   const random = (min, max) => {
@@ -67,11 +57,14 @@ const GamePage = () =>{
     var obj = pokemons;
     var keys = Object.keys(pokemons); //получаем ключи объекта в виде массива
     const newKey = database.ref().child('pokemons').push().key;
-    database.ref('pokemons/' + newKey).set(obj[keys[random(0,keys.length - 1)]])
+    const newPoke = obj[keys[random(0,keys.length - 1)]];
+    database.ref('pokemons/' + newKey).set(newPoke)
     .then(function() {
-              
+      setPokemons(prevState => {
+        const result = { ...prevState, [newKey]:newPoke };
+        return result;
+      });    
     });
-    refreshData();
   }
 
   return (
