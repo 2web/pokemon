@@ -1,10 +1,3 @@
-.root {
-    width: 268px;
-    height: 388px;
-    margin: 16px;
-    perspective: 1000px;
-}
-
 .pokemonCard {
     --fire: #FDDFDF;
     --grass: #DEFDE0;
@@ -21,8 +14,8 @@
     --fighting: #E6E0D4;
     --normal:#F5F5F5;
 
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     position: relative;
     transform-style: preserve-3d;
     transition: .6s .1s;
@@ -30,7 +23,21 @@
 }
 
 .pokemonCard.active {
-    transform: rotateY(0deg);
+    animation: flipFront 1000ms 300ms forwards;
+}
+
+@keyframes flipFront {
+    from {
+        transform: rotateY(180deg);
+    }
+    to {
+        transform: rotateY(0deg);
+    }
+}
+
+.pokemonCard.selected {
+    margin-top: -20px;
+    margin-bottom: 20px;
 }
 
 .cardFront,
@@ -82,6 +89,10 @@
 
 .wrap.back {
     z-index: -1;
+    background-image: url(../../assets/card-back-side.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .cardBack {
