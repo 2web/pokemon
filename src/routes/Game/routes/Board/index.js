@@ -1,13 +1,31 @@
+import { useContext } from 'react';
+import PokemonCard from '../../../../components/PokemonCard';
 import {PokemonContext} from '../../../../context/pokemonContext';
 
 import s from './style.module.css';
 
 const BoardPage = () => {
+    const { pokemons } = useContext(PokemonContext);
     return (
         <PokemonContext.Provider>
             <div className={s.root}>
                             <div className={s.playerOne}>
-
+                            {
+                                Object.values(pokemons).map(({key, id, name, img, type, values}) => (
+                                    <PokemonCard 
+                                        key={key} 
+                                        keyId={key} 
+                                        name={name} 
+                                        img={img} 
+                                        id={id} 
+                                        type={type} 
+                                        values={values} 
+                                        isActive
+                                        minimize
+                                        className={s.card}
+                                    />
+                                ))
+                            }
                             </div>
                 <div className={s.board}>
                     <div className={s.boardPlate}>1</div>

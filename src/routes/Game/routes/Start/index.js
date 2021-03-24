@@ -1,12 +1,16 @@
 import {useState, useEffect, useContext} from 'react';
+import { useHistory } from 'react-router-dom'
 
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/firebaseContext';
+import { PokemonContext } from '../../../../context/pokemonContext';
 
 import s from './style.module.css';
 
 const StartPage = () =>{
+  const history = useHistory();
   const firebase = useContext(FireBaseContext)
+  const pokemonsContext = useContext(PokemonContext);
   const [pokemons, setPokemons] = useState({});
   
   useEffect(() => {
@@ -17,7 +21,14 @@ const StartPage = () =>{
     return () => firebase.offPokemonSoket();
   }, [firebase]);
 
+  const handleStartGame = () => {
+    history.push('/game/board');
+  }
+
   const handleClickCard = (key) => {
+    const pokemon = {...pokemons[key]};
+    pokemonsContext.onSelectedPokemons(key, pokemon);
+    
     setPokemons(prevState => {
         const result = { ...prevState, 
         [key]: {
@@ -31,7 +42,9 @@ const StartPage = () =>{
   return (
       <div className={s.root}>
           <div style={{ textAlign: "center", margin: "0 0 20px 0"}}>
-            <button>
+            <button 
+                onClick={handleStartGame}
+                disabled={Object.keys(pokemonsContext.pokemons).length < 5 ? 'disabled' : ''}>
               Start game
             </button>
           </div>
@@ -46,9 +59,12 @@ const StartPage = () =>{
                     id={id} 
                     type={type} 
                     values={values} 
-                    isActive={true}
+                    isActive
                     isSelected={selected}
-                    onClickCard={handleClickCard} 
+                    onClickCard={() => {
+                        if(Object.keys(pokemonsContext.pokemons).length < 5 || selected)
+                            handleClickCard(key);
+                        }} 
                     minimize={false}
                     className={s.card}
                   />)
