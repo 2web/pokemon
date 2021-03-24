@@ -10,6 +10,9 @@ import cn from 'classnames';
 import MenuHeader from './components/MenuHeader';
 import Footer from './components/Footer';
 
+import {FireBaseContext} from './context/firebaseContext';
+import Firebase from './service/firebase';
+
 import s from './style.module.css';
 
 const App = () => {
@@ -17,6 +20,7 @@ const App = () => {
   const matchHome = useRouteMatch('/home');
   const match = matchRoot.isExact || matchHome ;
   return (
+    <FireBaseContext.Provider value={new Firebase()}>
       <Switch>
         <Route path="/404" component={NotFoundPage} />
         <Route>
@@ -40,6 +44,7 @@ const App = () => {
           </>
         </Route>
       </Switch>
+    </FireBaseContext.Provider>
   )
 };
 
