@@ -18,16 +18,16 @@ const FinishPage = () => {
 
     const [pokemonreward, setPokemonReward] = useState(null);
 
-    const Fin = () => {
-        console.log("tfinish ",finish);
-        if(finish === "win"){
-            return <h1>Win</h1>;
-        }else if(finish === "lose"){
-            return <h1>Lose</h1>;
-        }else{
-           return <h1>Draw</h1>;
-        }
-    }
+    // const Fin = () => {
+    //     console.log("tfinish ",finish);
+    //     if(finish === "win"){
+    //         return <h1>Win</h1>;
+    //     }else if(finish === "lose"){
+    //         return <h1>Lose</h1>;
+    //     }else{
+    //        return <h1>Draw</h1>;
+    //     }
+    // }
 
     if(finish === null){
         history.replace('/home');
@@ -102,7 +102,7 @@ const FinishPage = () => {
                     <button 
                         onClick={handleEndGame}
                         disabled={pokemonreward === null && finish === "win" ? 'disabled' : ''}>
-                    END GAME
+                        END GAME
                     </button>
                 </div>
                 <div className={s.flexinline}>
