@@ -161,6 +161,14 @@
     background-color: var(--normal);
 }
 
+.red{
+    background-color: #d998b2;
+}
+
+.blue{
+    background-color: #a8caea;
+}
+
 .pokemon .imgContainer {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
