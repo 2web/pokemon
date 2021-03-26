@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/firebaseContext';
@@ -9,7 +9,7 @@ import s from './style.module.css';
 
 const StartPage = () =>{
   const history = useHistory();
-  const firebase = useContext(FireBaseContext)
+  const firebase = useContext(FireBaseContext);
   const pokemonsContext = useContext(PokemonContext);
   const [pokemons, setPokemons] = useState({});
   

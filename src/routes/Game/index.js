@@ -4,10 +4,14 @@ import StartPage from './routes/Start';
 import BoardPage from './routes/Board';
 import FinishPage from './routes/Finish';
 import {PokemonContext} from '../../context/pokemonContext';
+import {FinishContext} from '../../context/finishContext';
 import { useState } from 'react';
 
 const GamePage = () => {
-  const [ selectedPokemons, setSelectedPokemons] = useState({});
+  const [selectedPokemons, setSelectedPokemons] = useState({});
+  const [pokemonsPlayer1, setPokemonsPlayer1] = useState({});
+  const [pokemonsPlayer2, setPokemonsPlayer2] = useState({});
+  const [iFinish, setFinish] = useState(null);
   const match = useRouteMatch();
 
   const handleSelectedPokemons = ( key, pokemon) => {
@@ -25,18 +29,34 @@ const GamePage = () => {
         
     })
   }
+  
+  const handleResetPokemons = ( key, pokemon) => {
+    setSelectedPokemons( prevState => {
+      return {}
+    })
+  }
 
   return (
-    <PokemonContext.Provider value={{
-      pokemons: selectedPokemons,
-      onSelectedPokemons: handleSelectedPokemons
-    }}>
-      <Switch>
-          <Route path={`${match.path}/`} exact component={StartPage} />
-          <Route path={`${match.path}/board`} component={BoardPage} />
-          <Route path={`${match.path}/finish`} component={FinishPage} />
-      </Switch>
-    </PokemonContext.Provider>
+      <PokemonContext.Provider value={{
+        pokemons: selectedPokemons,
+        onSelectedPokemons: handleSelectedPokemons,
+        onResetPokemons: handleResetPokemons,
+      }}>
+        <FinishContext.Provider value={{
+          finish: iFinish,
+          onFin: setFinish,
+          pP1: pokemonsPlayer1,
+          pP2: pokemonsPlayer2,
+          onPP1: setPokemonsPlayer1,
+          onPP2: setPokemonsPlayer2
+        }}>
+          <Switch>
+              <Route path={`${match.path}/`} exact component={StartPage} />
+              <Route path={`${match.path}/board`} component={BoardPage} />
+              <Route path={`${match.path}/finish`} component={FinishPage} />
+          </Switch>
+        </FinishContext.Provider>
+      </PokemonContext.Provider>
   );
 };
 

@@ -3,9 +3,11 @@ import {useHistory} from 'react-router-dom';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import {PokemonContext} from '../../../../context/pokemonContext';
+import {FinishContext} from '../../../../context/finishContext';
 
 import s from './style.module.css';
 import PlayerBoard from './components/PlayerBoard';
+import Result from './components/Result';
 
 const counterWin = (board, player1, player2) => {
     let player1Count = player1.length;
@@ -26,6 +28,10 @@ const counterWin = (board, player1, player2) => {
 
 const BoardPage = () => {
     const { pokemons } = useContext(PokemonContext);
+
+    const { finish } = useContext(FinishContext);
+    const { onFin,onPP1,onPP2 } = useContext(FinishContext);
+
     const [board, setBoard] = useState([]);
     const [player1, setPlayer1] = useState(() => {
         return Object.values(pokemons).map(item => ({
@@ -55,8 +61,9 @@ const BoardPage = () => {
                 possession: 'red'
             }))
         });
-        // console.log(player1);
-        // console.log(player2);
+        onPP1(prevState => {
+            return {...player1};
+        });
     }, []);
 
     if (Object.keys(pokemons).length === 0){
@@ -91,6 +98,11 @@ const BoardPage = () => {
             }
             
             if(choiceCard.player === 2){
+                if(player2.length === 5){
+                    onPP2(prevState => {
+                        return {...player2};
+                    });
+                }
                 setPlayer2(prevState => prevState.filter(item => item.id !== choiceCard.id));
             }
 
@@ -106,16 +118,21 @@ const BoardPage = () => {
     useEffect(() => {
         if(steps === 9){
             const [count1, count2] = counterWin(board, player1, player2);
-
+            
             if(count1 > count2){
-                alert("WIN");
+                onFin("win");
             } else if(count1 < count2){
-                alert("LOSE");
+                onFin("lose");
             } else{
-                alert("DRAW");
+                onFin("draw");
             }
         }
     }, [steps]);
+
+    const handleFinishClick = () => {
+        console.log('finish!!!');
+        history.push('/game/finish');
+    }
 
     return (
         <PokemonContext.Provider value={null}>
@@ -144,6 +161,9 @@ const BoardPage = () => {
                         ))
                     }
                 </div>
+                {
+                    (finish !== null) && <Result type={finish} onSelfClick={() => handleFinishClick()} />
+                }
                 <div className={s.playerTwo}>
                     <PlayerBoard 
                         key={2}
