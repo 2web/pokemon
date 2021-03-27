@@ -126,8 +126,7 @@ const BoardPage = () => {
             setBoard(request.data);
 
             setSteps(prevState => {
-                const count = prevState + 1;
-                return count;
+                return prevState + 1;
             })
 
             setOrder(prevState => {
