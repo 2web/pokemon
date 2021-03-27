@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import { PokemonContext } from '../../../../context/pokemonContext';
-import {FinishContext} from '../../../../context/finishContext';
+import { FinishContext } from '../../../../context/finishContext';
 import { FireBaseContext } from '../../../../context/firebaseContext';
 import { useState } from 'react';
 
@@ -61,7 +61,6 @@ const FinishPage = () => {
     const handleEndGame = () => {
         if(pokemonreward !== null){
             var obj = pP2;
-            // var keys = Object.keys(pP2); //получаем ключи объекта в виде массива
             const newPoke = obj[pokemonreward];
             delete newPoke.selected;
             delete newPoke.possession;

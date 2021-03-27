@@ -44,6 +44,11 @@
     left: 5vw;
     width: 18vw;
     height: 50.3vw;
+    border-radius: 24px;
+    padding: 2px;
+}
+.active{
+    border: 1px solid #000;
 }
 .playerTwo {
     position: absolute;
@@ -51,4 +56,6 @@
     right: 5vw;
     width: 18vw;
     height: 50.3vw;
+    border-radius: 24px;
+    padding: 2px;
 }

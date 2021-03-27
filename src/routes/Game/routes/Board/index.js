@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
+import cn from 'classnames';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import {PokemonContext} from '../../../../context/pokemonContext';
@@ -9,16 +10,25 @@ import s from './style.module.css';
 import PlayerBoard from './components/PlayerBoard';
 import Result from './components/Result';
 
+function getSafe(fn, defaultVal="") {
+    try {
+      return fn();
+    } catch (e) {
+      return defaultVal;
+    }
+}
+
 const counterWin = (board, player1, player2) => {
     let player1Count = player1.length;
     let player2Count = player2.length;
 
     board.forEach(item => {
-        if(item.card.possession === 'red'){
+        if(getSafe(() => item.card.possession) === 'red'){
             player2Count++;
         }
+        
 
-        if(item.card.possession === 'blue'){
+        if(getSafe(() => item.card.possession) === 'blue'){
             player1Count++;
         }
     });
@@ -26,13 +36,17 @@ const counterWin = (board, player1, player2) => {
     return [player1Count, player2Count];
 }
 
+const random = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const BoardPage = () => {
-    const { pokemons } = useContext(PokemonContext);
+    const { pokemons } = useContext(PokemonContext);//покемоны игрока
 
-    const { finish } = useContext(FinishContext);
-    const { onFin,onPP1,onPP2 } = useContext(FinishContext);
+    const { finish } = useContext(FinishContext);//признак финала
+    const { onFin,onPP1,onPP2 } = useContext(FinishContext);//установка признака финала и карты в финал
 
-    const [board, setBoard] = useState([]);
+    const [board, setBoard] = useState([]);//доска
     const [player1, setPlayer1] = useState(() => {
         return Object.values(pokemons).map(item => ({
             ...item,
@@ -40,8 +54,9 @@ const BoardPage = () => {
         }))
     });
     const [player2, setPlayer2] = useState([]);
-    const [choiceCard, setChoiceCard] = useState(null);
-    const [steps, setSteps] = useState(0);
+    const [choiceCard, setChoiceCard] = useState(null);//текущая выбранная карта
+    const [steps, setSteps] = useState(0);//количество шагов
+    const [order, setOrder] = useState(null);//кто ходит player1 или player2
 
     const history = useHistory();
 
@@ -64,6 +79,8 @@ const BoardPage = () => {
         onPP1(prevState => {
             return {...player1};
         });
+
+        setOrder(random(1,2));
     }, []);
 
     if (Object.keys(pokemons).length === 0){
@@ -71,8 +88,8 @@ const BoardPage = () => {
     }
 
     const handleClickBoardPlate = async (position) => {
-        console.log('position: #####',position);
-        console.log('choiceCard: #####',choiceCard);
+        // console.log('position: #####',position);
+        // console.log('choiceCard: #####',choiceCard);
         if(choiceCard){
             const params = {
                 position,
@@ -90,7 +107,7 @@ const BoardPage = () => {
 
             const request = await res.json();
 
-            console.log('request: #####',request);
+            // console.log('request: #####',request);
             
 
             if(choiceCard.player === 1){
@@ -112,6 +129,15 @@ const BoardPage = () => {
                 const count = prevState + 1;
                 return count;
             })
+
+            setOrder(prevState => {
+                if(order === 1)
+                    return 2;
+                else
+                    return 1;
+            });
+
+            setChoiceCard(null);
         }
     }
 
@@ -130,18 +156,19 @@ const BoardPage = () => {
     }, [steps]);
 
     const handleFinishClick = () => {
-        console.log('finish!!!');
+        // console.log('finish!!!');
         history.push('/game/finish');
     }
 
     return (
         <PokemonContext.Provider value={null}>
             <div className={s.root}>
-                <div className={s.playerOne}>
+                <div className={cn(s.playerOne,order===1 && s.active)}>
                     <PlayerBoard 
                         key={1}
                         player={1}
                         cards={player1}
+                        order={order}
                         onClickCard={(card) => setChoiceCard(card)} 
                     />
                 </div>
@@ -156,7 +183,6 @@ const BoardPage = () => {
                                 {
                                     item.card && <PokemonCard {...item.card} isActive minimize />
                                 }
-                                
                             </div>
                         ))
                     }
@@ -164,11 +190,12 @@ const BoardPage = () => {
                 {
                     (finish !== null) && <Result type={finish} onSelfClick={() => handleFinishClick()} />
                 }
-                <div className={s.playerTwo}>
+                <div className={cn(s.playerTwo,order===2 && s.active)}>
                     <PlayerBoard 
                         key={2}
                         player={2}
                         cards={player2}
+                        order={order}
                         onClickCard={(card) => setChoiceCard(card)}
                     />
                 </div>

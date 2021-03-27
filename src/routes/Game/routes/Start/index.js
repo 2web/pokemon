@@ -41,7 +41,7 @@ const StartPage = () =>{
 
   return (
       <div className={s.root}>
-          <div style={{ textAlign: "center", margin: "0 0 20px 0"}}>
+          <div style={{ textAlign: "center", margin: "0 0 30px 0"}}>
             <button 
                 onClick={handleStartGame}
                 disabled={Object.keys(pokemonsContext.pokemons).length < 5 ? 'disabled' : ''}>
