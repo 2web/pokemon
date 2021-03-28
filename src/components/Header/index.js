@@ -4,12 +4,6 @@ import s from './style.module.css';
 import './style.css';
 
 const Header = ({title, descr, onClickButton}) => {
-  const history = useHistory();
-  
-  const handleClick = () =>{
-      history.push('/game');
-  };
-
   //estrelas
   var style = ["style1", "style2", "style3", "style4", "style5"];
   var tam = ["tam1", "tam1", "tam1", "tam2", "tam3"];
@@ -41,7 +35,7 @@ const Header = ({title, descr, onClickButton}) => {
             <div className={s.container}>
                 <h1>{title}</h1>
                 <p>{descr}</p>
-                <button onClick={handleClick}>
+                <button onClick={onClickButton}>
                     Start Game
                 </button>
             </div>

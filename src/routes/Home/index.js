@@ -3,12 +3,16 @@ import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 
 import imgBg1 from "../../assets/bg1.jpg";
+import { useDispatch, useSelector } from 'react-redux';
+import { plusAction, selectCount } from '../../store/counter';
 
 const HomePage = () => {
     const history = useHistory();
-
+    const count = useSelector(selectCount);
+    const dispatch = useDispatch();
+    
     const handleClick = () =>{
-        history.push('/game');
+      history.push('/game');
     };
   return (
     <div className="App">
