@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/firebaseContext';
@@ -9,7 +9,7 @@ import s from './style.module.css';
 
 const StartPage = () =>{
   const history = useHistory();
-  const firebase = useContext(FireBaseContext)
+  const firebase = useContext(FireBaseContext);
   const pokemonsContext = useContext(PokemonContext);
   const [pokemons, setPokemons] = useState({});
   
@@ -41,7 +41,7 @@ const StartPage = () =>{
 
   return (
       <div className={s.root}>
-          <div style={{ textAlign: "center", margin: "0 0 20px 0"}}>
+          <div style={{ textAlign: "center", margin: "0 0 30px 0"}}>
             <button 
                 onClick={handleStartGame}
                 disabled={Object.keys(pokemonsContext.pokemons).length < 5 ? 'disabled' : ''}>

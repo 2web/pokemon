@@ -34,7 +34,7 @@ const MENU = [
             {
               MENU.map(({title, to}, index) => (
                 <li key={index}>
-                  <Link to={to} onClick={onClickHamburg}>
+                  <Link to={'/'+to} onClick={onClickHamburg}>
                     {title}
                   </Link>
                 </li>
