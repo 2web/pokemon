@@ -127,7 +127,7 @@ const BoardPage = () => {
 
             setSteps(prevState => {
                 return prevState + 1;
-            })
+            });
 
             setOrder(prevState => {
                 if(order === 1)
